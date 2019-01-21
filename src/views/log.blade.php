@@ -131,20 +131,18 @@
               @endif
               <td class="date">{{{$log['date']}}}</td>
               <td class="text">
-                @if ($log['stack'])
+                @if ($log['text'])
                   <button type="button"
                           class="float-right expand btn btn-outline-dark btn-sm mb-2 ml-2"
                           data-display="stack{{{$key}}}">
                     <span class="fa fa-search"></span>
                   </button>
                 @endif
-                {{{$log['text']}}}
-                @if (isset($log['in_file']))
-                  <br/>{{{$log['in_file']}}}
-                @endif
-                @if ($log['stack'])
+                {{{$log['min_text']}}}
+
+                @if ($log['text'])
                   <div class="stack" id="stack{{{$key}}}"
-                       style="display: none; white-space: pre-wrap;">{{{ trim($log['stack']) }}}
+                       style="display: none; white-space: pre-wrap;">{{{ trim($log['text']) }}}
                   </div>
                 @endif
               </td>

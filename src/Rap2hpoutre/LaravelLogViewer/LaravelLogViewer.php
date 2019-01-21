@@ -153,6 +153,13 @@ class LaravelLogViewer
                         preg_match($this->pattern->getPattern('current_log',0) . $level . $this->pattern->getPattern('current_log',1), $h[$i], $current);
                         if (!isset($current[4])) continue;
 
+                        preg_match($this->pattern->getPattern('min'), $current[4], $matches);
+                        if (!isset($matches[0])) {
+                            $min_text = null;
+                        } else {
+                            $min_text = $matches[0];
+                        }
+
                         $log[] = array(
                             'context' => $current[3],
                             'level' => $level,
@@ -160,6 +167,7 @@ class LaravelLogViewer
                             'level_img' => $this->level->img($level),
                             'date' => $current[1],
                             'text' => $current[4],
+                            'min_text' => $min_text,
                             'in_file' => isset($current[5]) ? $current[5] : null,
                             'stack' => preg_replace("/^\n*/", '', $log_data[$i])
                         );

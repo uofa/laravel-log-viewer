@@ -16,6 +16,7 @@ class Pattern
      */
     private $patterns = [
         'logs' => '/\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}([\+-]\d{4})?\].*/',
+        'min' => '/.+?(?=Stack trace)/',
         'current_log' => [
             '/^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}([\+-]\d{4})?)\](?:.*?(\w+)\.|.*?)',
             ': (.*?)( in .*?:[0-9]+)?$/i'
@@ -42,6 +43,6 @@ class Pattern
             return $this->patterns[$pattern][$position];
         }
         return $this->patterns[$pattern];
-        
+
     }
 }
