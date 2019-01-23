@@ -145,6 +145,8 @@ class LaravelLogViewer
             array_shift($log_data);
         }
 
+        $generatedList = [];
+        $totalOccurrences = [];
         foreach ($headings as $h) {
             for ($i = 0, $j = count($h); $i < $j; $i++) {
                 foreach ($this->level->all() as $level) {
@@ -160,6 +162,18 @@ class LaravelLogViewer
                             $min_text = $matches[0];
                         }
 
+                        if (isset($totalOccurrences[$min_text])) {
+                            $totalOccurrences[$min_text] += 1;
+                        } else {
+                            $totalOccurrences[$min_text] = 1;
+                        }
+
+                        if (in_array($min_text, $generatedList)){
+                            continue;
+                        }
+
+                        $current[4] = preg_replace("/(#\w+)/", "\n\n $0", $current[4]);
+                        $generatedList[] = $min_text;
                         $log[] = array(
                             'context' => $current[3],
                             'level' => $level,
@@ -193,6 +207,10 @@ class LaravelLogViewer
                     'stack' => '',
                 ];
             }
+        }
+
+        foreach ($log as &$item) {
+            $item['occurrences'] = $totalOccurrences[$item['min_text']];
         }
 
         return array_reverse($log);

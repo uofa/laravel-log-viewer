@@ -113,6 +113,7 @@
               <th>Level</th>
               <th>Context</th>
               <th>Date</th>
+              <th>Consecutive Occurrences</th>
             @else
               <th>Line number</th>
             @endif
@@ -120,7 +121,6 @@
           </tr>
           </thead>
           <tbody>
-
           @foreach($logs as $key => $log)
             <tr data-display="stack{{{$key}}}">
               @if ($standardFormat)
@@ -130,6 +130,7 @@
                 <td class="text">{{$log['context']}}</td>
               @endif
               <td class="date">{{{$log['date']}}}</td>
+              <td class="occurrences">{{{$log['occurrences']}}}</td>
               <td class="text">
                 @if ($log['text'])
                   <button type="button"
@@ -141,8 +142,9 @@
                 {{{$log['min_text']}}}
 
                 @if ($log['text'])
-                  <div class="stack" id="stack{{{$key}}}"
-                       style="display: none; white-space: pre-wrap;">{{{ trim($log['text']) }}}
+                  <div class="stack" id="stack{{{$key}}}" style="display: none; white-space: pre-wrap;">
+                    <br>
+                    {{{ trim($log['text']) }}}
                   </div>
                 @endif
               </td>
