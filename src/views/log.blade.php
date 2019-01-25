@@ -139,7 +139,15 @@
                     <span class="fa fa-search"></span>
                   </button>
                 @endif
-                {{{$log['min_text']}}}
+                @if (strlen($log['min_text']) > 0)
+                  {{{ $log['min_text'] }}}
+                @else
+                  @if (strlen($log['text']) > 250)
+                    {{{ substr(trim($log['text']), 0, 250) }}}...
+                  @else
+                    {{{ trim($log['text']) }}}
+                  @endif
+                @endif
 
                 @if ($log['text'])
                   <div class="stack" id="stack{{{$key}}}" style="display: none; white-space: pre-wrap;">
